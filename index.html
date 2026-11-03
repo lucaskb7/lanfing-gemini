@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkedIn y la Visibilidad Laboral | TPO Plataformas</title>
+    <style>
+        :root {
+            --bg-color: #f3f2ef;
+            --text-main: #191919;
+            --text-muted: #666666;
+            --linkedin-blue: #0a66c2;
+            --card-bg: #ffffff;
+            --border-color: #e0dfdc;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif; }
+        
+        body { background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; }
+        
+        .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+        
+        /* Hero Section */
+        .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; text-align: center; padding: 4rem 20px; }
+        .hero h1 { font-size: 3rem; color: var(--linkedin-blue); margin-bottom: 1rem; }
+        .hero p { font-size: 1.2rem; color: var(--text-muted); max-width: 600px; margin: 0 auto 3rem auto; }
+        
+        /* Interactive Profiles */
+        .profiles-container { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 20px; max-width: 500px; margin: 0 auto; position: relative; }
+        .profiles-label { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; display: block; text-align: left; }
+        .profile-card { display: flex; align-items: center; padding: 15px; border-bottom: 1px solid var(--border-color); transition: transform 0.5s ease; background: #fff; }
+        .profile-card:last-child { border-bottom: none; }
+        .avatar { width: 48px; height: 48px; border-radius: 50%; background: var(--border-color); margin-right: 15px; }
+        .profile-info { text-align: left; }
+        .profile-info strong { display: block; font-size: 1rem; }
+        .profile-info span { font-size: 0.85rem; color: var(--text-muted); }
+        .profile-tag { display: none; font-size: 0.75rem; background: #e8f4fd; color: var(--linkedin-blue); padding: 2px 6px; border-radius: 4px; margin-top: 5px; width: fit-content; }
+
+        /* Scrollytelling Sections */
+        .section { min-height: 80vh; display: flex; align-items: center; padding: 4rem 0; opacity: 0; transform: translateY(30px); transition: all 0.8s ease; }
+        .section.visible { opacity: 1; transform: translateY(0); }
+        .section-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; width: 100%; }
+        
+        .text-content h2 { font-size: 2.2rem; margin-bottom: 1.5rem; color: var(--text-main); }
+        .text-content p { font-size: 1.1rem; color: var(--text-muted); margin-bottom: 1.5rem; }
+        
+        /* Video Placeholder */
+        .video-placeholder { background: #000; border-radius: 8px; aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center; color: #fff; position: relative; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .video-placeholder::after { content: '▶'; font-size: 3rem; opacity: 0.8; }
+        .video-caption { position: absolute; bottom: 15px; left: 15px; right: 15px; text-align: center; font-style: italic; font-size: 0.9rem; z-index: 2; text-shadow: 1px 1px 3px rgba(0,0,0,0.8); }
+
+        /* Visuals & Data */
+        .data-box { background: var(--card-bg); padding: 20px; border-radius: 8px; border: 1px solid var(--border-color); margin-top: 20px; }
+        .comparison-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .col { padding: 15px; background: #f9f9f9; border-radius: 6px; }
+
+        /* Footer */
+        footer { padding: 4rem 20px; background: var(--card-bg); border-top: 1px solid var(--border-color); font-size: 0.9rem; color: var(--text-muted); }
+        
+        @media (max-width: 768px) {
+            .section-grid { grid-template-columns: 1fr; gap: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="hero" id="hero">
+        <div class="container">
+            <h1>¿Quién decide qué perfil ve un reclutador?</h1>
+            <p>Cuando aplicás a un empleo o construís tu red, el orden en el que aparecés no es casual. Detrás de la interfaz, un modelo de negocio y un sistema algorítmico deciden tu nivel de visibilidad.</p>
+            
+            <div class="profiles-container" id="profile-list">
+                <span class="profiles-label">Resultados de búsqueda (Simulación Ilustrativa)</span>
+                <!-- Los perfiles se reordenarán vía JS al scrollear -->
+                <div class="profile-card" data-id="1">
+                    <div class="avatar"></div>
+                    <div class="profile-info">
+                        <strong>Esteban Roel</strong>
+                        <span>Comunicación Digital</span>
+                        <div class="profile-tag">Premium</div>
+                    </div>
+                </div>
+                <div class="profile-card" data-id="2">
+                    <div class="avatar"></div>
+                    <div class="profile-info">
+                        <strong>Francesca D'Abbraccio</strong>
+                        <span>Producción Audiovisual</span>
+                        <div class="profile-tag">Match de Keywords</div>
+                    </div>
+                </div>
+                <div class="profile-card" data-id="3">
+                    <div class="avatar"></div>
+                    <div class="profile-info">
+                        <strong>Ignacio Burgos</strong>
+                        <span>Diseño UX/UI</span>
+                        <div class="profile-tag">Contactos en común</div>
+                    </div>
+                </div>
+                <div class="profile-card" data-id="4">
+                    <div class="avatar"></div>
+                    <div class="profile-info">
+                        <strong>Germán Ostaszewski</strong>
+                        <span>Marketing Digital</span>
+                        <div class="profile-tag">Alto Engagement</div>
+                    </div>
+                </div>
+                <div class="profile-card" data-id="5">
+                    <div class="avatar"></div>
+                    <div class="profile-info">
+                        <strong>Lucas Kaufmann</strong>
+                        <span>E-commerce & RRHH</span>
+                        <div class="profile-tag">Open to Work</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- SECCIÓN 1 -->
+        <section class="section">
+            <div class="section-grid">
+                <div class="text-content">
+                    <h2>1. ¿Quién paga?</h2>
+                    <p><strong>LinkedIn no cobra por conectar, cobra por ordenar la conexión.</strong></p>
+                    <p>La plataforma transforma la intermediación laboral[cite: 14]. Los profesionales acceden gratis, pero la empresa monetiza vendiendo acceso jerarquizado al talento a través de herramientas corporativas como Recruiter, y visibilidad diferencial mediante suscripciones Premium[cite: 1, 12, 13].</p>
+                </div>
+                <div class="video-placeholder">
+                    <div class="video-caption">"Es gratis para vos, pero no para quien te busca."</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 2 -->
+        <section class="section">
+            <div class="section-grid">
+                <div class="video-placeholder">
+                    <div class="video-caption">"El algoritmo aprende de lo que hacen los reclutadores, no de lo que valés."</div>
+                </div>
+                <div class="text-content">
+                    <h2>2. ¿Qué se mide?</h2>
+                    <p><strong>Tu trayectoria se convierte en datos, y los datos en un orden.</strong></p>
+                    <p>Cada término en tu perfil, interacción o postulación alimenta una arquitectura programable[cite: 9, 10, 15]. Estos datos generan un excedente conductual que entrena a los modelos predictivos de la plataforma[cite: 2, 10, 16].</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 3 -->
+        <section class="section">
+            <div class="section-grid">
+                <div class="text-content">
+                    <h2>3. ¿A quién perjudica?</h2>
+                    <p><strong>El algoritmo no parte de cero; opera sobre un mercado ya desigual.</strong></p>
+                    <p>Al estar diseñada para trayectorias formales y estandarizadas, la plataforma entra en tensión con mercados donde el 45% del trabajo es informal[cite: 1, 3, 21]. Además, las métricas demostraron que las mujeres enfrentan un 13% menos de probabilidades de que abran sus perfiles en las búsquedas[cite: 2, 22].</p>
+                </div>
+                <div class="video-placeholder">
+                    <div class="video-caption">"Si los reclutadores miran menos a cierto perfil, el sistema aprende a mostrarlo menos."</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 4 -->
+        <section class="section">
+            <div class="section-grid">
+                <div class="video-placeholder">
+                    <div class="video-caption">"Nos aplican los mismos algoritmos, con menos garantías."</div>
+                </div>
+                <div class="text-content">
+                    <h2>4. ¿Quién decide?</h2>
+                    <p><strong>Las reglas de visibilidad las pone, modifica y audita la propia plataforma.</strong></p>
+                    <div class="data-box comparison-grid">
+                        <div class="col">
+                            <strong>Europa</strong><br>
+                            Multas millonarias, retiro de segmentación por grupos y propuestas para regular la IA en empleo[cite: 2, 18, 19].
+                        </div>
+                        <div class="col">
+                            <strong>Argentina</strong><br>
+                            Ley 25.326 del año 2000, desactualizada frente al tratamiento de decisiones automatizadas[cite: 1, 2, 19].
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CIERRE -->
+        <section class="section" id="cierre">
+            <div class="section-grid">
+                <div class="text-content">
+                    <h2>Conclusión</h2>
+                    <p><strong>La visibilidad no es neutral, es un producto.</strong></p>
+                    <p>El diseño de LinkedIn y su modelo económico condicionan el acceso a las oportunidades. Es indispensable avanzar hacia auditorías externas, garantizar el derecho a conocer los criterios de visibilidad y actualizar el marco normativo nacional[cite: 20].</p>
+                </div>
+                <div class="video-placeholder">
+                    <div class="video-caption">"El desafío no es adaptarnos al algoritmo, sino exigir reglas claras sobre quién controla nuestra visibilidad."</div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p><strong>Bibliografía y fuentes:</strong> Trabajo Práctico Seminario de Tópicos de Avanzada II: Plataformas Mediáticas (UADE, 2026). Docente: Mauro Limas[cite: 1].</p>
+        </div>
+    </footer>
+
+    <script>
+        // Lógica de Scrollytelling: Animar elementos on scroll
+        const sections = document.querySelectorAll('.section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.2 });
+
+        sections.forEach(section => observer.observe(section));
+
+        // Lógica para reordenar perfiles ficticios al hacer scroll y mostrar las etiquetas al final
+        const profileList = document.getElementById('profile-list');
+        const profiles = Array.from(profileList.children).filter(el => el.classList.contains('profile-card'));
+        const hero = document.getElementById('hero');
+        const cierre = document.getElementById('cierre');
+        
+        let hasShuffled = false;
+
+        window.addEventListener('scroll', () => {
+            // Reordenar apenas se scrollea fuera del hero
+            if (window.scrollY > 150 && !hasShuffled) {
+                hasShuffled = true;
+                for (let i = profiles.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    profileList.appendChild(profiles[j]);
+                }
+            } else if (window.scrollY <= 150 && hasShuffled) {
+                hasShuffled = false;
+                // Vuelve al orden original
+                profiles.sort((a, b) => a.dataset.id - b.dataset.id).forEach(el => profileList.appendChild(el));
+            }
+
+            // Mostrar etiquetas cuando llegamos a la conclusión
+            const cierreRect = cierre.getBoundingClientRect();
+            const tags = document.querySelectorAll('.profile-tag');
+            if(cierreRect.top < window.innerHeight) {
+                tags.forEach(tag => tag.style.display = 'block');
+            } else {
+                tags.forEach(tag => tag.style.display = 'none');
+            }
+        });
+    </script>
+</body>
+</html>
